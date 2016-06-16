@@ -11,7 +11,7 @@ public static class StringEncryption {
 	// STRING ENCRYPTION
 	// Encrypts and decrypts a string according to the given key.
 
-	private static string key = "AcroStorm4Ever";
+	private static string key = "YOUR_KEY_HERE";
 
 	public static string Encrypt(string toEncrypt, bool useHashing = false)
 	{
