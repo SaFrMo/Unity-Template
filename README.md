@@ -1,5 +1,7 @@
 # The SaFrMo Template #
 
+*MIT license - redistribute, modify, sell, etc. to your heart's content!*
+
 The SaFrMo template collects some of the most useful plugins and utility functions I've put together as a Unity developer. These are tools that I find myself importing on just about every project, so making them a public repo seems to be a good way to save myself and others some time in the future.
 
 ### How do I use it? ###
