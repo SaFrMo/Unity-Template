@@ -1,1 +1,1 @@
-# THE SAFRMO Template #
+# The SaFrMo Template #
