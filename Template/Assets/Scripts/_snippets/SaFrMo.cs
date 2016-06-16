@@ -152,6 +152,46 @@ public class SaFrMo : MonoBehaviour {
 
 		return toReturn;
 	}
+	
+	/// <summary>
+	/// Search a GameObject, its children, then its parents for a Component.
+	/// </summary>
+	/// <param name="source">Source.</param>
+	/// <typeparam name="T">The 1st type parameter.</typeparam>
+	/*
+	public static T GetComponentInTree<T>(GameObject go) where T : Component {
+		T toReturn = go.GetComponent<T>();
+		if (toReturn == null)
+			toReturn = go.GetComponentInChildren<T>();
+		if (toReturn == null)
+			toReturn = go.GetComponentInParent<T>();
+		return toReturn;
+	}
+	*/
+	
+	// ===================
+	/* WIP BELOW */
+	// ===================
+	
+	/* Tooltips
+	
+	public delegate void TooltipCallback();
 
+	public static GameObject CreateTooltip (string message, GameObject prefab, Vector3 indicatedPosition, RectTransform parentRectTransform, float lifetime = -1f, TooltipCallback onExit = null) {
+		// Instantiate prefab
+		GameObject createdTooltip = Instantiate(prefab) as GameObject;
+		// Assumes the existence of a SaFrMo.Tooltip component in the prefab
+		SaFrMo.Tooltip component = GetComponentInTree<SaFrMo.Tooltip>(createdTooltip);
 
+	}
+
+	namespace SaFrMo {
+
+		public class Tooltip : MonoBehaviour {
+			public Text mainText;
+			public Text headerText;
+			public Button confirmationButton;
+		}
+
+	}*/
 }
