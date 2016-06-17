@@ -6,6 +6,12 @@ using System.Linq;
 using UnityEngine.UI;
 using System.IO;
 
+// Useful links for common dev tasks:
+// =======================================
+//		JSON visualizer, builder, loader: http://www.thomasfrank.se/downloadableJS/JSONeditor_example.html
+//
+//
+
 public class SaFrMo : MonoBehaviour {
 
 	// Boilerplate functions for all projects
