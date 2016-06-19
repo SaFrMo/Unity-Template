@@ -1,3 +1,5 @@
 Template/Library/
 Template/Temp/
 Template/ProjectSettings/
+*.sln
+*.csproj
