@@ -43,9 +43,9 @@ namespace SaFrLib {
 		public GameObject prefab;
 		public delegate void TooltipCallback(GameObject createdTooltip);
 	
-		public static void CreateNew(	string toDisplay, RectTransform parent = null, Vector3 position = default(Vector3), 
+		public static Tooltip CreateNew(string toDisplay, RectTransform parent = null, Vector3 position = default(Vector3), 
 										Transform toFollow = null, Vector3 offset = default(Vector3), 
-										string exitText = "", string[] exitChoices = null, TooltipCallback[] exitCallbacks = null, 
+										string exitText = "Continue", string[] exitChoices = null, TooltipCallback[] exitCallbacks = null, 
 										TooltipCallback onCreation = null, TooltipCallback onDestruction = null) {
 
 			// Look for Tooltips component in the scene
@@ -72,6 +72,9 @@ namespace SaFrLib {
 			if (onCreation != null) {
 				onCreation.Invoke(newTooltip);
 			}
+
+			// Set text to display
+			tooltip.SetDisplayText(toDisplay);
 
 			// Save OnDestruction callback
 			tooltip.onDestruction = onDestruction;
@@ -108,7 +111,13 @@ namespace SaFrLib {
 			tooltipRecTransform.position = position;
 
 			// Create exit buttons
+			if (exitChoices == null) {
+				exitChoices = new string[] { exitText };
+			}
+			tooltip.CreateExitButtons(exitChoices, exitCallbacks);
 
+			// Return instantiated Tooltip
+			return tooltip;
 		}
 
 		void Start() {

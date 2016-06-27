@@ -11,6 +11,14 @@ namespace SaFrLib {
 
 		public Tooltips.TooltipCallback onDestruction;
 
+		public void CreateExitButtons(string[] toDisplay, Tooltips.TooltipCallback[] callbacks) {
+
+		}
+
+		public void SetDisplayText(string text) {
+
+		}
+
 		void OnDestroy() {
 			if (onDestruction != null) {
 				onDestruction.Invoke(gameObject);
