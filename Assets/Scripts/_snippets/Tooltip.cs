@@ -6,7 +6,7 @@ namespace SaFrLib {
 	public class Tooltip : MonoBehaviour {
 
 		public Transform toFollow;
-		public Vector3 toFollowOffset;
+		public Vector3 toFollowOffset = Vector3.zero;
 		public MenuRefresher exitButtons;
 		public Text body;
 		public bool canGoOffscreen = false;
@@ -71,7 +71,7 @@ namespace SaFrLib {
 
 		protected virtual void Update() {
 			if (toFollow != null) {
-				MoveTo(Camera.main.WorldToScreenPoint(toFollow.position));
+				MoveTo(Camera.main.WorldToScreenPoint(toFollow.position + toFollowOffset));
 			}
 		}
 
