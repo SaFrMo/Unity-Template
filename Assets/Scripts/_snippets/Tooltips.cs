@@ -6,7 +6,7 @@ using System.Collections;
 namespace SaFrLib {
 	public class Tooltips : MonoBehaviour {
 
-		public static string defaultPrefabPath = "SaFrMo/Default Tooltip";
+		public static string defaultPrefabPath = "SaFrLib/Default Tooltip";
 
 		/// TOOLTIPS
 		/// ===============
@@ -37,6 +37,9 @@ namespace SaFrLib {
 		/// - TODO
 		/// 	- Style options
 		/// 	- Interaction options (draggable, etc.)
+		/// 	- make toFollow follow
+		/// 	- Headline on tooltip
+		/// 	- Parameter-less TooltipCallback
 		/// 
 
 		// Tooltip prefab to instantiate
@@ -121,7 +124,7 @@ namespace SaFrLib {
 		}
 
 		void Start() {
-			Tooltips.CreateNew("test");
+			Tooltips.CreateNew("test", exitChoices: new string[] { "Exit now!" }, exitCallbacks: new TooltipCallback[] { (gameObject) => { print("Exiting..."); } });
 		}
 	}
 }
