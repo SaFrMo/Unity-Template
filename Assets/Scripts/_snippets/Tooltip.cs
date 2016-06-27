@@ -9,8 +9,14 @@ namespace SaFrLib {
 		public Vector3 toFollowOffset;
 		public MenuRefresher exitButtons;
 		public Text body;
+		public bool canGoOffscreen = false;
+		RectTransform rect;
 
 		public Tooltips.TooltipCallback onDestruction;
+
+		void Start() {
+			rect = GetComponent<RectTransform>();
+		}
 
 		public void CreateExitButtons(string[] toDisplay, Tooltips.TooltipCallback[] callbacks) {
 			int i = 0;
@@ -47,6 +53,25 @@ namespace SaFrLib {
 		void OnDestroy() {
 			if (onDestruction != null) {
 				onDestruction.Invoke(gameObject);
+			}
+		}
+
+		void MoveTo(Vector3 screenPoint) {
+			Vector3 targetPos = screenPoint;
+			if (!canGoOffscreen) {
+				float minX = rect.rect.width / 2f;
+				float maxX = Screen.width - rect.rect.width / 2f;
+				float minY = rect.rect.height / 2f;
+				float maxY = Screen.height - rect.rect.height / 2f;
+				targetPos.x = Mathf.Clamp(targetPos.x, minX, maxX);
+				targetPos.y = Mathf.Clamp(targetPos.y, minY, maxY);
+			}
+			transform.position = targetPos;
+		}
+
+		protected virtual void Update() {
+			if (toFollow != null) {
+				MoveTo(Camera.main.WorldToScreenPoint(toFollow.position));
 			}
 		}
 

@@ -37,7 +37,6 @@ namespace SaFrLib {
 		/// - TODO
 		/// 	- Style options
 		/// 	- Interaction options (draggable, etc.)
-		/// 	- make toFollow follow
 		/// 	- Headline on tooltip
 		/// 	- Parameter-less TooltipCallback
 		/// 
@@ -123,8 +122,18 @@ namespace SaFrLib {
 			return tooltip;
 		}
 
+		/* Testing purposes
+		GameObject g;
 		void Start() {
-			Tooltips.CreateNew("test", exitChoices: new string[] { "Exit now!" }, exitCallbacks: new TooltipCallback[] { (gameObject) => { print("Exiting..."); } });
+			g = GameObject.CreatePrimitive(PrimitiveType.Cube);
+			Tooltips.CreateNew("test", exitChoices: new string[] { "Exit now!" }, exitCallbacks: new TooltipCallback[] { (gameObject) => { print("Exiting..."); } }, toFollow: g.transform);
 		}
+
+		void Update() {
+			g.transform.position -= Vector3.up * Time.deltaTime;
+			g.transform.position += Vector3.left * Time.deltaTime;
+		}
+		*/
+
 	}
 }
