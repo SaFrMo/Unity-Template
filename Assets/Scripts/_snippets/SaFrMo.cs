@@ -164,16 +164,16 @@ public class SaFrMo : MonoBehaviour {
 	/// </summary>
 	/// <param name="source">Source.</param>
 	/// <typeparam name="T">The 1st type parameter.</typeparam>
-	/*
+
 	public static T GetComponentInTree<T>(GameObject go) where T : Component {
 		T toReturn = go.GetComponent<T>();
 		if (toReturn == null)
 			toReturn = go.GetComponentInChildren<T>();
 		if (toReturn == null)
-			toReturn = go.GetComponentInParent<T>();
+			toReturn = go.GetComponentInParent<T>();			
 		return toReturn;
 	}
-	*/
+
 	
 	// ===================
 	/* WIP BELOW */
