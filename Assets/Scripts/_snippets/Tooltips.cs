@@ -35,11 +35,8 @@ namespace SaFrLib {
 		/// 		exitChoice button is pressed
 		/// 
 		/// - TODO
-		/// 	- Style options
-		/// 	- Interaction options (draggable, etc.)
+		/// 	- Style options: background color, font color, font family
 		/// 	- Headline on tooltip
-		/// 	- Parameter-less TooltipCallback
-		/// 	- Padding from side
 		/// 
 
 		// Tooltip prefab to instantiate
@@ -132,7 +129,8 @@ namespace SaFrLib {
 		void Start() {
 			g = GameObject.CreatePrimitive(PrimitiveType.Cube);
 			TooltipStyleOptions style = new TooltipStyleOptions(
-				viewportPadding: new Vector3(20f, 0)
+				viewportPadding: new Vector3(20f, 0),
+				draggable: true
 			);
 			//style.viewportPadding 
 			Tooltips.CreateNew("test", 
@@ -141,7 +139,7 @@ namespace SaFrLib {
 					x => { print("Exiting..."); },
 					x => { print("Saying goodbye and exiting..."); }
 				}, 
-				toFollow: g.transform,
+				//toFollow: g.transform,
 				offset: new Vector3(30f, 1f),
 				style: style
 			);
@@ -156,10 +154,12 @@ namespace SaFrLib {
 	}
 
 	public class TooltipStyleOptions {
-		public TooltipStyleOptions(Vector3 viewportPadding = default(Vector3)) {
+		public TooltipStyleOptions(Vector3 viewportPadding = default(Vector3), bool draggable = false) {
 			this.viewportPadding = viewportPadding;
+			this.draggable = draggable;
 		}
 
-		public Vector3 viewportPadding = Vector3.zero;
+		public Vector3 viewportPadding;
+		public bool draggable;
 	}
 }

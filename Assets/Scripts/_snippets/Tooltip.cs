@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using UnityEngine.EventSystems;
 
 namespace SaFrLib {
-	public class Tooltip : MonoBehaviour {
+	public class Tooltip : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler {
 
 		public Transform toFollow;
 		public Vector3 toFollowOffset = Vector3.zero;
@@ -22,9 +23,40 @@ namespace SaFrLib {
 
 		public Tooltips.TooltipCallback onDestruction;
 
+		// Dragging variables
+		Vector3 dragOffset;
+
 		void Start() {
 			rect = GetComponent<RectTransform>();
 		}
+
+		#region IBeginDragHandler implementation
+
+		public virtual void OnBeginDrag (PointerEventData eventData)
+		{
+			dragOffset = rect.position - new Vector3(eventData.position.x, eventData.position.y);
+		}
+
+		#endregion
+
+		#region IDragHandler implementation
+
+		public virtual void OnDrag (PointerEventData eventData)
+		{
+			if (style.draggable) {
+				rect.position = new Vector3(eventData.position.x, eventData.position.y) + dragOffset;
+			}
+		}
+
+		#endregion
+
+		#region IEndDragHandler implementation
+
+		public virtual void OnEndDrag (PointerEventData eventData)
+		{
+		}
+
+		#endregion
 
 		public void CreateExitButtons(string[] toDisplay, Tooltips.TooltipCallback[] callbacks) {
 			int i = 0;
