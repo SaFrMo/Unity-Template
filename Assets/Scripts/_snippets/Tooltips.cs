@@ -39,6 +39,7 @@ namespace SaFrLib {
 		/// 	- Interaction options (draggable, etc.)
 		/// 	- Headline on tooltip
 		/// 	- Parameter-less TooltipCallback
+		/// 	- Padding from side
 		/// 
 
 		// Tooltip prefab to instantiate
@@ -48,7 +49,8 @@ namespace SaFrLib {
 		public static Tooltip CreateNew(string toDisplay, RectTransform parent = null, Vector3 position = default(Vector3), 
 										Transform toFollow = null, Vector3 offset = default(Vector3), 
 										string exitText = "Continue", string[] exitChoices = null, TooltipCallback[] exitCallbacks = null, 
-										TooltipCallback onCreation = null, TooltipCallback onDestruction = null) {
+										TooltipCallback onCreation = null, TooltipCallback onDestruction = null,
+										TooltipStyleOptions style = null) {
 
 			// Look for Tooltips component in the scene
 			Tooltips t = FindObjectOfType<Tooltips>();
@@ -118,22 +120,46 @@ namespace SaFrLib {
 			}
 			tooltip.CreateExitButtons(exitChoices, exitCallbacks);
 
+			// Set style
+			tooltip.style = style;
+
 			// Return instantiated Tooltip
 			return tooltip;
 		}
 
-		/* Testing purposes
+		// Testing purposes
 		GameObject g;
 		void Start() {
 			g = GameObject.CreatePrimitive(PrimitiveType.Cube);
-			Tooltips.CreateNew("test", exitChoices: new string[] { "Exit now!" }, exitCallbacks: new TooltipCallback[] { (gameObject) => { print("Exiting..."); } }, toFollow: g.transform);
+			TooltipStyleOptions style = new TooltipStyleOptions(
+				viewportPadding: new Vector3(20f, 0)
+			);
+			//style.viewportPadding 
+			Tooltips.CreateNew("test", 
+				exitChoices: new string[] { "Exit now!", "Exit and say goodbye!" }, 
+				exitCallbacks: new TooltipCallback[] { 
+					x => { print("Exiting..."); },
+					x => { print("Saying goodbye and exiting..."); }
+				}, 
+				toFollow: g.transform,
+				offset: new Vector3(30f, 1f),
+				style: style
+			);
 		}
 
 		void Update() {
 			g.transform.position -= Vector3.up * Time.deltaTime;
 			g.transform.position += Vector3.left * Time.deltaTime;
 		}
-		*/
 
+
+	}
+
+	public class TooltipStyleOptions {
+		public TooltipStyleOptions(Vector3 viewportPadding = default(Vector3)) {
+			this.viewportPadding = viewportPadding;
+		}
+
+		public Vector3 viewportPadding = Vector3.zero;
 	}
 }
