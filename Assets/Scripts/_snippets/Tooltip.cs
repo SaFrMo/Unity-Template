@@ -6,6 +6,9 @@ using UnityEngine.EventSystems;
 namespace SaFrLib {
 	public class Tooltip : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler {
 
+		// TOOLTIP
+		// Attach this as a component to the GameObject you want to instantiate as a Tooltip.
+
 		public Transform toFollow;
 		public Vector3 toFollowOffset = Vector3.zero;
 		public Vector3 viewportPadding { get { return style.viewportPadding; } }

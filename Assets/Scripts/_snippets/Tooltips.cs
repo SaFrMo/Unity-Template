@@ -14,25 +14,31 @@ namespace SaFrLib {
 		/// 	Tooltips provide UI popups to (a) CONVEY INFORMATION to the player and
 		/// 	(b) ENABLE ACTIONS that the player can take.
 		/// - HOW
-		/// 	Call Tooltips.CreateNew with the following options:
+		/// 	Call Tooltips.CreateNew with any of the following options. Using named variables can help
+		/// 	with the lack of overload functions - see the `Tooltips.CreateNew` implementation example
+		/// 	at the bottom of the script for more information.
+		/// 
 		/// 	- string toDisplay (required) - the text to display in the Tooltip
-		/// 	- RectTransform parent (optional) - the RectTransform parent of this Tooltip.
+		/// 	- RectTransform parent (default null, optional) - the RectTransform parent of this Tooltip.
 		/// 		Defaults to the first Canvas in the scene and creates a Canvas if none is in place.
-		/// 	- Vector3 position (optional) - the center of the spawned Tooltip
-		/// 	- Transform toFollow (optional) - the Transform this tooltip will follow
-		/// 	- Vector3 offset (optional, requires toFollow) - the distance between this
+		/// 	- Vector3 position (default default(Vector3), optional) - the center of the spawned Tooltip
+		/// 	- Transform toFollow (default null, optional) - the Transform this tooltip will follow
+		/// 	- Vector3 offset (default default(Vector3), optional, requires toFollow) - the distance between this
 		/// 		Tooltip and the transform it will follow
-		/// 	- TooltipCallback onCreation (optional) - callback to be fired when this	
+		/// 	- TooltipCallback onCreation (default null, optional) - callback to be fired when this	
 		/// 		Tooltip is created (uses created tooltip as parameter)
-		/// 	- TooltipCallback onDestruction (optional) - callback to be fired when this
+		/// 	- TooltipCallback onDestruction (default null, optional) - callback to be fired when this
 		/// 		Tooltip is destroyed (uses created tooltip as parameter)
-		/// 	- string exitText (optional) - text to display on 'Continue...' button (defaults
+		/// 	- string exitText (default "Continue", optional) - text to display on 'Continue...' button (defaults
 		/// 		to 'Continue')
-		/// 	- string[] exitChoices - creates buttons that destroy the Tooltip and invoke
+		/// 	- string[] exitChoices (default null, optional) - creates buttons that destroy the Tooltip and invoke
 		/// 		the corresponding function in exitCallbacks (requires exitCallbacks to be
 		/// 		defined)
-		/// 	- TooltipCallback[] exitCallbacks - methods to invoke when the corresponding
+		/// 	- TooltipCallback[] exitCallbacks (default null, optional) - methods to invoke when the corresponding
 		/// 		exitChoice button is pressed
+		/// 	- Tooltip toCreate (default null, optional) - Override instantiating the Tooltips prefab
+		/// 		in favor of a specified prefab
+		/// 	- TooltipStyleOptions style (default null, optional) - Style options for created Tooltip
 		/// 
 		/// - TODO
 		/// 	- Style options: background color, font color, font family
@@ -47,7 +53,7 @@ namespace SaFrLib {
 										Transform toFollow = null, Vector3 offset = default(Vector3), 
 										string exitText = "Continue", string[] exitChoices = null, TooltipCallback[] exitCallbacks = null, 
 										TooltipCallback onCreation = null, TooltipCallback onDestruction = null,
-										TooltipStyleOptions style = null) {
+										TooltipStyleOptions style = null, Tooltip toCreate = null) {
 
 			// Look for Tooltips component in the scene
 			Tooltips t = FindObjectOfType<Tooltips>();
@@ -60,8 +66,10 @@ namespace SaFrLib {
 			if (t.prefab == null) {
 				t.prefab = Resources.Load<GameObject>(defaultPrefabPath);
 			}
+			// Set GameObject to instantiate
+			Tooltip toInstantiate = (toCreate == null ? t.prefab : toCreate.gameObject);
 			// Instantiate tooltip
-			GameObject newTooltip = Instantiate<GameObject>(t.prefab) as GameObject;
+			GameObject newTooltip = Instantiate<GameObject>(toInstantiate) as GameObject;
 			// Make sure new tooltip has Tooltip component
 			if (newTooltip.GetComponent<Tooltip>() == null) {
 				newTooltip.AddComponent<Tooltip>();
@@ -124,7 +132,7 @@ namespace SaFrLib {
 			return tooltip;
 		}
 
-		// Testing purposes
+		// Example implementation
 		/*
 		GameObject g;
 		void Start() {
