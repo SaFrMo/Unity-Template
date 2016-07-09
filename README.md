@@ -16,6 +16,9 @@ The SaFrMo template collects some of the most useful plugins and utility functio
 * **SaFrMo**, a collection of utility functions I've put together during different projects
 * **StringEncryption**, which enables basic string encryption and decyrption given an arbitrary key (**not** meant for security purposes, but instead as a deterrent to modifiying save files, dialogue assets, etc)
 * **MenuRefresher**, a utility class to auto-populate UI menus (see file for instructions)
+* **Tooltips**, a class to set up tooltips (see Tooltips.cs and Tooltip.cs for instructions)
 
 ### Wish List ###
+
+### Wish List - Completed ###
 * A utility to create tooltips. Include tooltip text, prefab path or prefab GameObject, target screen position or Transform, and default lifetime for tooltips and/or confirmation/exit button text
