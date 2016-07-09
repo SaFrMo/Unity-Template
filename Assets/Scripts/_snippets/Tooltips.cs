@@ -125,6 +125,7 @@ namespace SaFrLib {
 		}
 
 		// Testing purposes
+		/*
 		GameObject g;
 		void Start() {
 			g = GameObject.CreatePrimitive(PrimitiveType.Cube);
@@ -149,6 +150,7 @@ namespace SaFrLib {
 			g.transform.position -= Vector3.up * Time.deltaTime;
 			g.transform.position += Vector3.left * Time.deltaTime;
 		}
+		*/
 
 
 	}
