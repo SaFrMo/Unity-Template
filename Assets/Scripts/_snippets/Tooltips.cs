@@ -45,7 +45,11 @@ namespace SaFrLib {
 		/// 	- Headline on tooltip
 		/// 
 
-		// Tooltip prefab to instantiate
+		//
+
+		/// <summary>
+		/// The tooltip prefab.
+		/// </summary>
 		public GameObject prefab;
 		public delegate void TooltipCallback(GameObject createdTooltip);
 	
@@ -67,9 +71,9 @@ namespace SaFrLib {
 				t.prefab = Resources.Load<GameObject>(defaultPrefabPath);
 			}
 			// Set GameObject to instantiate
-			Tooltip toInstantiate = (toCreate == null ? t.prefab : toCreate.gameObject);
+			Tooltip toInstantiate = (toCreate == default(Tooltip) ? t.prefab.GetComponent<Tooltip>() : toCreate);
 			// Instantiate tooltip
-			GameObject newTooltip = Instantiate<GameObject>(toInstantiate) as GameObject;
+			GameObject newTooltip = Instantiate<GameObject>(toInstantiate.gameObject) as GameObject;
 			// Make sure new tooltip has Tooltip component
 			if (newTooltip.GetComponent<Tooltip>() == null) {
 				newTooltip.AddComponent<Tooltip>();
