@@ -174,6 +174,20 @@ namespace SaFrLib {
 			return toReturn;
 		}
 
+		/// <summary>
+		/// Gets a component. Creates one if none present.
+		/// </summary>
+		/// <returns>The or create.</returns>
+		/// <param name="go">Go.</param>
+		/// <typeparam name="T">The 1st type parameter.</typeparam>
+		public T GetOrCreate<T>(GameObject go) where T:Component { 
+			T toReturn = go.GetComponent<T>(); 
+			if (toReturn == null) { 
+				toReturn = go.AddComponent<T>(); 
+			} 
+			return toReturn; 
+		}
+
 		
 		// ===================
 		/* WIP BELOW */
