@@ -11,7 +11,15 @@ namespace SaFrLib {
 
 		public Transform toFollow;
 		public Vector3 toFollowOffset = Vector3.zero;
-		public Vector3 viewportPadding { get { return style.viewportPadding; } }
+		public Vector3 viewportPadding { 
+			get { 
+				if (style == null || style.viewportPadding == default(Vector3)) {
+					return Vector3.zero;
+				} else {
+					return style.viewportPadding; 
+				}
+			} 
+		}
 		public MenuRefresher exitButtons;
 		public Text body;
 		public bool canGoOffscreen = false;
@@ -31,6 +39,10 @@ namespace SaFrLib {
 
 		void Start() {
 			rect = GetComponent<RectTransform>();
+
+			if (style == null) {
+				style = new TooltipStyleOptions();
+			}
 		}
 
 		#region IBeginDragHandler implementation
@@ -46,7 +58,7 @@ namespace SaFrLib {
 
 		public virtual void OnDrag (PointerEventData eventData)
 		{
-			if (style.draggable) {
+			if (style == null || style.draggable) {
 				rect.position = new Vector3(eventData.position.x, eventData.position.y) + dragOffset;
 			}
 		}
