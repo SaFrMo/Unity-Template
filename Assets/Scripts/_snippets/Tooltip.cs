@@ -97,6 +97,16 @@ namespace SaFrLib {
 			});
 		}
 
+		public void SelfDestruct(float delay) {
+			Invoke("DestroyMe", delay);
+		}
+
+		public void DestroyMe() {
+			if (gameObject) {
+				Destroy(gameObject);
+			}
+		}
+
 		public void SetDisplayText(string text) {
 			body.text = text;
 		}

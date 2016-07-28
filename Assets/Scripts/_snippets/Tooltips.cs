@@ -39,6 +39,7 @@ namespace SaFrLib {
 		/// 	- Tooltip toCreate (default null, optional) - Override instantiating the Tooltips prefab
 		/// 		in favor of a specified prefab
 		/// 	- TooltipStyleOptions style (default null, optional) - Style options for created Tooltip
+		/// 	- float destroyAfter (default -1, optional) - Tooltip will self-destruct in this many seconds (-1 to skip)
 		/// 
 		/// - TODO
 		/// 	- Style options: background color, font color, font family
@@ -57,7 +58,7 @@ namespace SaFrLib {
 										Transform toFollow = null, Vector3 offset = default(Vector3), 
 										string exitText = "Continue", string[] exitChoices = null, TooltipCallback[] exitCallbacks = null, 
 										TooltipCallback onCreation = null, TooltipCallback onDestruction = null,
-										TooltipStyleOptions style = null, Tooltip toCreate = null) {
+										TooltipStyleOptions style = null, Tooltip toCreate = null, float destroyAfter = -1f) {
 
 			// Look for Tooltips component in the scene
 			Tooltips t = FindObjectOfType<Tooltips>();
@@ -131,6 +132,11 @@ namespace SaFrLib {
 
 			// Set style
 			tooltip.style = style;
+
+			// Set autodestroy timer
+			if (destroyAfter != -1f) {
+				tooltip.SelfDestruct(destroyAfter);
+			}
 
 			// Return instantiated Tooltip
 			return tooltip;
