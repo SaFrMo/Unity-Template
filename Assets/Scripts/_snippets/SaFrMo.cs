@@ -58,6 +58,10 @@ namespace SaFrLib {
 			return (UnityEngine.Random.Range (0, 100) < chanceOfSuccess);
 		}
 
+		/// <summary>
+		/// Roll for success (using a float - casts to int).
+		/// </summary>
+		/// <param name="chanceOfSuccess">Chance of success.</param>
 		public static bool Roll(float chanceOfSuccess) {
 			return Roll ((int)(chanceOfSuccess));
 		}
