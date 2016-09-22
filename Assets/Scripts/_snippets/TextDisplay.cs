@@ -18,18 +18,6 @@ namespace SaFrLib {
 		/// 	Additionally, you can add a TextDisplay component to any GameObject in the level and assign a custom
 		/// 	TextDisplayCanvas to display text.
 		/// 
-		/// TODO:
-		/// CUSTOMIZE:
-		/// 	TextDisplay allows for a wide variety of custom displays.
-		/// 
-		/// 	You can pass one or many List<string> objects, which will then populate TextDisplayCanvas accordingly.
-		/// 	For example, if I wanted to list Alice's name alongside her speech, I'd pass:
-		/// 		TextDisplay.Display(new List<string>("Hey! I'm Alice.", "Alice"));
-		/// 	This would place "Hey! I'm Alice." in TextDisplayCanvas.displayAreas[0] and "Alice" in TextDisplayCanvas.displayAreas[1].
-		/// 
-		/// 	I could then set up a conversation like this:
-		/// 		TextDisplay.Display(new List<string>() { "Hey! I'm Alice.", "Alice" }, "What's your name?", new List<string>() { "I'm Bob.", "Bob" });
-		/// 	This would display Alice's name in the first cell, continue to display it in the second, and overwrite it with Bob's name in the third.
 
 		//
 
