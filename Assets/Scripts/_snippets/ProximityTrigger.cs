@@ -26,7 +26,9 @@ namespace SaFrLib {
 
 		// Prep the callback
 		[SerializeField]
-		public ProximityCallback onTrigger;
+		public ProximityCallback triggerEnter;
+		[SerializeField]
+		public ProximityCallback triggerExit;
 
 		protected virtual void Start() {
 			// Get or create the collider
@@ -40,10 +42,17 @@ namespace SaFrLib {
 			c.isTrigger = true;
 		}
 
-		// Invoke the callback
+		// Invoke triggerEnter
 		protected virtual void OnTriggerEnter(Collider coll) {
-			if (onTrigger != null) {
-				onTrigger.Invoke(this, coll.gameObject);
+			if (triggerEnter != null) {
+				triggerEnter.Invoke(this, coll.gameObject);
+			}
+		}
+
+		// Invoke triggerExit
+		protected virtual void OnTriggerExit(Collider coll) {
+			if (triggerExit != null) {
+				triggerExit.Invoke(this, coll.gameObject);
 			}
 		}
 	}
