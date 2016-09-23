@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using System.Linq;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace SaFrLib {
 	public class Tooltips : MonoBehaviour {
@@ -53,12 +55,31 @@ namespace SaFrLib {
 		/// </summary>
 		public GameObject prefab;
 		public delegate void TooltipCallback(GameObject createdTooltip);
-	
+
+		/// <summary>
+		/// Creates the new Tooltip.
+		/// </summary>
+		/// <returns>The new.</returns>
+		/// <param name="toDisplay">String o display.</param>
+		/// <param name="parent">Parent.</param>
+		/// <param name="position">Position in screen space.</param>
+		/// <param name="toFollow">Object to stay on top of.</param>
+		/// <param name="offset">Offset from followed object..</param>
+		/// <param name="exitText">Exit text.</param>
+		/// <param name="exitChoices">Exit choices.</param>
+		/// <param name="exitCallbacks">Exit callbacks.</param>
+		/// <param name="onCreation">On creation callback.</param>
+		/// <param name="onDestruction">On destruction callback.</param>
+		/// <param name="style">Style.</param>
+		/// <param name="toCreate">Prefab to create.</param>
+		/// <param name="destroyAfter">Destroy after a given number of seconds (-1 = never)</param>
+		/// <param name="subsequentTooltips">Shortcut to subsequent tooltips. Useful for tutorials that don't require special placement, for instance.</param>
 		public static Tooltip CreateNew(string toDisplay, RectTransform parent = null, Vector3 position = default(Vector3), 
-										Transform toFollow = null, Vector3 offset = default(Vector3), 
-										string exitText = "Continue", string[] exitChoices = null, TooltipCallback[] exitCallbacks = null, 
-										TooltipCallback onCreation = null, TooltipCallback onDestruction = null,
-										TooltipStyleOptions style = null, Tooltip toCreate = null, float destroyAfter = -1f) {
+			Transform toFollow = null, Vector3 offset = default(Vector3), 
+			string exitText = "Continue", string[] exitChoices = null, TooltipCallback[] exitCallbacks = null, 
+			TooltipCallback onCreation = null, TooltipCallback onDestruction = null,
+			TooltipStyleOptions style = null, Tooltip toCreate = null, float destroyAfter = -1f,
+			string[] subsequentTooltips = null) {
 
 			// Look for Tooltips component in the scene
 			Tooltips t = FindObjectOfType<Tooltips>();
@@ -136,6 +157,18 @@ namespace SaFrLib {
 			// Set autodestroy timer
 			if (destroyAfter != -1f) {
 				tooltip.SelfDestruct(destroyAfter);
+			}
+
+			// Set up subsequent Tooltips
+			if (subsequentTooltips != null && subsequentTooltips.Length > 0) {
+				List<string> allExceptFirst = new List<string>(subsequentTooltips);
+				allExceptFirst.RemoveAt(0);
+				string first = subsequentTooltips[0];
+				tooltip.onDestruction = x => {
+					Tooltips.CreateNew(first, 
+						parent: parent, position: position, toFollow: toFollow, offset: offset, exitText: exitText, toCreate: toCreate, destroyAfter: destroyAfter,
+						subsequentTooltips: allExceptFirst.ToArray<string>());
+				};
 			}
 
 			// Return instantiated Tooltip
