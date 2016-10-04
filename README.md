@@ -13,6 +13,7 @@ The SaFrMo template collects some of the most useful plugins and utility functio
 ### What's included? ###
 * **iTween**, the fantastic tweening and animation library [(link)](https://www.assetstore.unity3d.com/en/#!/content/84)
 * **iTweenHinting**, which enables hinting for iTween methods and parameters [(link)](http://blog.almostlogical.com/2010/09/13/itween-parameter-code-hinting/)
+* **Shader snippets**, from the excellent Makin' Stuff Look Good in Unity channel [(link)](https://www.youtube.com/watch?v=T-HXmQAMhG0&index=1&list=PLJ4rOFLQFH4BUVziWikfHvL8TbNGJ6M_f)
 * **SaFrMo**, a collection of utility functions I've put together during different projects
 * **StringEncryption**, which enables basic string encryption and decyrption given an arbitrary key (**not** meant for security purposes, but instead as a deterrent to modifiying save files, dialogue assets, etc)
 * **MenuRefresher**, a utility class to auto-populate UI menus (see file for instructions)
