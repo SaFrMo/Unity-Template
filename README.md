@@ -18,8 +18,16 @@ The SaFrMo template collects some of the most useful plugins and utility functio
 * **StringEncryption**, which enables basic string encryption and decyrption given an arbitrary key (**not** meant for security purposes, but instead as a deterrent to modifiying save files, dialogue assets, etc)
 * **MenuRefresher**, a utility class to auto-populate UI menus (see file for instructions)
 * **Tooltips**, a class to set up tooltips (see Tooltips.cs and Tooltip.cs for instructions)
+* **VisualTimer**, a class to set up visual timers (progress bars, etc. - see VisualTimer.cs for instructions)
+* **ProximityTrigger**, for events when one object is in range of another (see ProximityTrigger.cs for instructions)
+* **Standard2dMover** and **Standard3dMover**, for basic 2D and 3D movement
+* **GameObjectHolder**, for when you need a script to hold a reference to a GameObject
 
 ### Wish List ###
+
+* Allow count up or count down progress on visual timers
+* Generalized RectTransform Follow actions
+* Improved creation of UI components (better scaling on RectTransforms, dynamic canvas creation, etc., especially in VisualTimer)
 
 ### Wish List - Completed ###
 * A utility to create tooltips. Include tooltip text, prefab path or prefab GameObject, target screen position or Transform, and default lifetime for tooltips and/or confirmation/exit button text

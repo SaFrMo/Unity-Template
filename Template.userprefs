@@ -1,11 +1,11 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\2D Movement\Standard2dMovement.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Shaders\_snippets\basic.shader">
     <Files>
-      <File FileName="Assets\Scripts\_snippets\SaFrMo.cs" Line="62" Column="55" />
-      <File FileName="Assets\Scripts\_snippets\Tooltips.cs" Line="42" Column="40" />
+      <File FileName="Assets\Shaders\_snippets\basic.shader" Line="43" Column="1" />
+      <File FileName="Assets\Scripts\_snippets\SaFrMo.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\_snippets\Tooltips.cs" Line="1" Column="1" />
       <File FileName="Assets\Scripts\_snippets\Tooltip.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\2D Movement\Standard2dMovement.cs" Line="8" Column="55" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
