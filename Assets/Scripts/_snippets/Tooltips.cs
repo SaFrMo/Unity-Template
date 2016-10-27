@@ -68,8 +68,8 @@ namespace SaFrLib {
 		/// <param name="exitText">Exit text.</param>
 		/// <param name="exitChoices">Exit choices.</param>
 		/// <param name="exitCallbacks">Exit callbacks.</param>
-		/// <param name="onCreation">On creation callback.</param>
-		/// <param name="onDestruction">On destruction callback.</param>
+		/// <param name="onCreation">On creation callback. Accepts the created Tooltip's GameObject as a parameter.</param>
+		/// <param name="onDestruction">On destruction callback. Accepts the created Tooltip's GameObject as a parameter.</param>
 		/// <param name="style">Style.</param>
 		/// <param name="toCreate">Prefab to create.</param>
 		/// <param name="destroyAfter">Destroy after a given number of seconds (-1 = never)</param>
