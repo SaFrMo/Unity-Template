@@ -192,6 +192,20 @@ namespace SaFrLib {
 			return toReturn; 
 		}
 
+		/// <summary>
+		/// Finds the specified component anywhere in the scene, or creates an empty GameObject with that component included.
+		/// </summary>
+		/// <returns>The or create.</returns>
+		/// <typeparam name="T">The 1st type parameter.</typeparam>
+		public static T FindOrCreate<T>() where T : Component {
+			T toReturn = FindObjectOfType<T> ();
+			if (toReturn == null) {
+				GameObject createdGameObject = new GameObject (typeof(T).ToString () + " (Created by SaFrMo.FindOrCreate)", typeof(T));
+				toReturn = createdGameObject.GetComponent<T> ();
+			}
+			return toReturn;
+		}
+
 		
 		// ===================
 		/* WIP BELOW */

@@ -60,7 +60,7 @@ namespace SaFrLib {
 		/// Creates the new Tooltip.
 		/// </summary>
 		/// <returns>The new.</returns>
-		/// <param name="toDisplay">String o display.</param>
+		/// <param name="toDisplay">String to display.</param>
 		/// <param name="parent">Parent.</param>
 		/// <param name="position">Position in screen space.</param>
 		/// <param name="toFollow">Object to stay on top of.</param>
@@ -74,7 +74,7 @@ namespace SaFrLib {
 		/// <param name="toCreate">Prefab to create.</param>
 		/// <param name="destroyAfter">Destroy after a given number of seconds (-1 = never)</param>
 		/// <param name="subsequentTooltips">Shortcut to subsequent tooltips. Useful for tutorials that don't require special placement, for instance.</param>
-		public static Tooltip CreateNew(string toDisplay, RectTransform parent = null, Vector3 position = default(Vector3), 
+		public static Tooltip CreateNew(string toDisplay = "", RectTransform parent = null, Vector3 position = default(Vector3), 
 			Transform toFollow = null, Vector3 offset = default(Vector3), 
 			string exitText = "Continue", string[] exitChoices = null, TooltipCallback[] exitCallbacks = null, 
 			TooltipCallback onCreation = null, TooltipCallback onDestruction = null,
@@ -82,25 +82,23 @@ namespace SaFrLib {
 			string[] subsequentTooltips = null) {
 
 			// Look for Tooltips component in the scene
-			Tooltips t = FindObjectOfType<Tooltips>();
-			if (t == null) {
+			Tooltips tooltipsMaster = FindObjectOfType<Tooltips>();
+			if (tooltipsMaster == null) {
+				// Create Tooltips master component if it doesn't exist
 				GameObject g = new GameObject("Tooltip Master", typeof(Tooltips));
-				t = g.GetComponent<Tooltips>();
+				tooltipsMaster = g.GetComponent<Tooltips>();
 			}
 
 			// Set prefab to instantiate
-			if (t.prefab == null) {
-				t.prefab = Resources.Load<GameObject>(defaultPrefabPath);
+			if (tooltipsMaster.prefab == null) {
+				tooltipsMaster.prefab = Resources.Load<GameObject>(defaultPrefabPath);
 			}
 			// Set GameObject to instantiate
-			Tooltip toInstantiate = (toCreate == default(Tooltip) ? t.prefab.GetComponent<Tooltip>() : toCreate);
+			Tooltip toInstantiate = (toCreate == default(Tooltip) ? tooltipsMaster.prefab.GetComponent<Tooltip>() : toCreate);
 			// Instantiate tooltip
 			GameObject newTooltip = Instantiate<GameObject>(toInstantiate.gameObject) as GameObject;
 			// Make sure new tooltip has Tooltip component
-			if (newTooltip.GetComponent<Tooltip>() == null) {
-				newTooltip.AddComponent<Tooltip>();
-			}
-			Tooltip tooltip = newTooltip.GetComponent<Tooltip>();
+			Tooltip tooltip = SaFrMo.GetOrCreate<Tooltip> (newTooltip);
 			RectTransform tooltipRecTransform = newTooltip.GetComponent<RectTransform>();
 
 			// OnCreate callback
@@ -109,10 +107,14 @@ namespace SaFrLib {
 			}
 
 			// Set text to display
-			tooltip.SetDisplayText(toDisplay);
+			if (toDisplay.Length > 0) {
+				tooltip.SetDisplayText (toDisplay);
+			}
 
 			// Save OnDestruction callback
-			tooltip.onDestruction = onDestruction;
+			if (onDestruction != null) {
+				tooltip.onDestruction = onDestruction;
+			}
 
 			// Set parent
 			if (parent == null) {
@@ -125,7 +127,11 @@ namespace SaFrLib {
 				}
 				parent = c.GetComponent<RectTransform>();
 			}
-			newTooltip.transform.SetParent(parent, false);
+			// Make sure our parent is saved
+			if (parent != null) {
+				// Set parent
+				newTooltip.transform.SetParent (parent, false);
+			}
 
 			// Position new Tooltip
 			// First, account for default position
@@ -146,13 +152,19 @@ namespace SaFrLib {
 			tooltipRecTransform.position = position;
 
 			// Create exit buttons
-			if (exitChoices == null) {
+			if (exitChoices == null && exitText.Length > 0) {
 				exitChoices = new string[] { exitText };
 			}
-			tooltip.CreateExitButtons(exitChoices, exitCallbacks);
+
+			// Create exit text(s) and choice(s) if we have any
+			if (exitChoices != null && exitChoices.Length > 0) {
+				tooltip.CreateExitButtons (exitChoices, exitCallbacks);
+			}
 
 			// Set style
-			tooltip.style = style;
+			if (style != null) {
+				tooltip.style = style;
+			}
 
 			// Set autodestroy timer
 			if (destroyAfter != -1f) {
