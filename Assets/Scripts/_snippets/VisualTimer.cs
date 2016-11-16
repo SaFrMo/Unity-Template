@@ -30,7 +30,7 @@ namespace SaFrLib {
 		/// <summary>
 		/// Whether or not this timer self destructs on complete.
 		/// </summary>
-		public bool selfDestructOnComplete = true;
+		public bool selfDestructOnComplete = false;
 		/// <summary>
 		/// Whether or not this timer uses the in-game time scale.
 		/// </summary>
@@ -39,6 +39,11 @@ namespace SaFrLib {
 		/// Whether or not this timer is paused. Paused timers do not register any time changes.
 		/// </summary>
 		public bool paused = false;
+		/// <summary>
+		/// How many times this timer loops before ending. -1 = infinite.
+		/// </summary>
+		public int loop = 0;
+		private int currentIteration = 0;
 
 		/// <summary>
 		/// The timer sprite. This is the sprite that will change depending on total time and time remaining.
@@ -149,8 +154,11 @@ namespace SaFrLib {
 				// If so, run onTimerComplete
 				if (onTimerComplete != null)
 					onTimerComplete.Invoke ();
-				// Self-destruct if desired
-				if (selfDestructOnComplete) {
+				// Loop if desired
+				if (loop != 0 && ++currentIteration != loop) {
+					JumpToFraction (1f);
+				} else if (selfDestructOnComplete) {
+					// Self-destruct if desired
 					Destroy (gameObject);
 				}
 			}
@@ -164,10 +172,12 @@ namespace SaFrLib {
 		private const string defaultPath = "SaFrLib/Default Visual Timer";
 
 		/// <summary>
-		/// Creates an instance of the timer.
+		/// Creates an instance of the timer. `position` is the local position relative to the parent (world position if parent is null). 
+		/// `timesToLoop` can be set to -1 to loop infinitely.
 		/// </summary>
 		/// <returns>The timer.</returns>
-		public static VisualTimer CreateTimer(float time, Transform parent = null, Vector3 position = default(Vector3), Transform toFollow = null, string prefabPath = "", VisualTimer prefab = null) {
+		public static VisualTimer CreateTimer(float time, Transform parent = null, Vector3 position = default(Vector3), Transform toFollow = null, string prefabPath = "", VisualTimer prefab = null,
+			int timesToLoop = 0) {
 
 			// We don't have a prefab specified, so load the one we want to use
 			if (prefab == null) {
@@ -218,6 +228,9 @@ namespace SaFrLib {
 			if (toFollow != null) {
 				createdTimer.SetFollowTarget (toFollow);
 			}
+
+			// Set number of times to loop
+			createdTimer.loop = timesToLoop;
 
 			return createdTimer;
 		}
