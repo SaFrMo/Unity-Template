@@ -206,6 +206,16 @@ namespace SaFrLib {
 			return toReturn;
 		}
 
+		/// <summary>
+		/// Determines if the layer to test is in a given layer mask.
+		/// </summary>
+		/// <returns><c>true</c> if the layer is in the given mask; otherwise, <c>false</c>.</returns>
+		/// <param name="layerToTest">Layer to test.</param>
+		/// <param name="mask">Mask.</param>
+		public static bool IsInLayerMask(int layerToTest, LayerMask mask) {
+			return (mask.value & 1 << layerToTest) != 0;
+		}
+
 		
 		// ===================
 		/* WIP BELOW */
