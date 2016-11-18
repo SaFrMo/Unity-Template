@@ -74,6 +74,11 @@ namespace SaFrLib {
 		#endregion
 
 		public void CreateExitButtons(string[] toDisplay, Tooltips.TooltipCallback[] callbacks) {
+			// Exit if we don't have exit buttons defined
+			if (exitButtons == null) {
+				return;
+			}
+
 			int i = 0;
 			exitButtons.Setup<string>(toDisplay, (createdButton, text) => {
 				createdButton.GetComponentInChildren<Text>().text = text;
