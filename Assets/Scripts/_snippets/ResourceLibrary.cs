@@ -42,7 +42,6 @@ public class ResourceLibrary : MonoBehaviour {
 	/// Leave resourcePath blank to load from Resources/resourceKey, otherwise enter the relative path (for example, Resources/Foo/Bar would have its path
 	/// be "Foo/Bar").
 	/// </summary>
-	/// <returns>The resource.</returns>
 	/// <param name="resourceKey">Resource key.</param>
 	public void SetResource(string resourceKey, string resourcePath = "") {
 		// Ignore if we've already saved the resource
@@ -53,6 +52,7 @@ public class ResourceLibrary : MonoBehaviour {
 		// Load resource and instantiate original
 		GameObject resource = Resources.Load(resourcePath.Length > 0 ? resourcePath : resourceKey) as GameObject;
 		GameObject instantiation = Instantiate (resource) as GameObject;
+		instantiation.name = resource.name;
 		instantiation.SetActive (false);
 		instantiation.transform.SetParent (transform);
 
