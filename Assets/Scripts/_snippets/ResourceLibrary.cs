@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-//using SaFrLib;
+using System.Linq;
+using SaFrLib;
 
 /// ResourceLibrary
 /// A memory-lenient way to load and instantiate resources.
@@ -16,6 +17,11 @@ public class ResourceLibrary : MonoBehaviour {
 	/// The dictionary containing all resources loaded by this script.
 	/// </summary>
 	public Dictionary<string, GameObject> dictionary = new Dictionary<string, GameObject>();
+	/// <summary>
+	/// A shortcut to get all keys in the dictionary.
+	/// </summary>
+	/// <value>The keys.</value>
+	public List<string> keys { get { return dictionary.Keys.ToList (); } }
 
 	/// <summary>
 	/// Creates a copy of the desired resource by key name.
@@ -42,6 +48,7 @@ public class ResourceLibrary : MonoBehaviour {
 	/// Leave resourcePath blank to load from Resources/resourceKey, otherwise enter the relative path (for example, Resources/Foo/Bar would have its path
 	/// be "Foo/Bar").
 	/// </summary>
+	/// <returns>The resource.</returns>
 	/// <param name="resourceKey">Resource key.</param>
 	public void SetResource(string resourceKey, string resourcePath = "") {
 		// Ignore if we've already saved the resource
@@ -61,7 +68,8 @@ public class ResourceLibrary : MonoBehaviour {
 	}
 
 	/// <summary>
-	/// Gets the original resource (ie, the GameObject instantiated by Resource.Load).
+	/// Gets the original resource (ie, the GameObject instantiated by Resource.Load). If the original resource has already been set, the resourcePath
+	/// parameter is unnecessary.
 	/// Leave resourcePath blank to load from Resources/resourceKey, otherwise enter the relative path (for example, Resources/Foo/Bar would have its path
 	/// be "Foo/Bar").
 	/// </summary>
@@ -72,6 +80,26 @@ public class ResourceLibrary : MonoBehaviour {
 		SetResource (resourceKey, resourcePath);
 
 		return dictionary [resourceKey];
+	}
+
+	/// <summary>
+	/// Gets a random object instantiated by the ResourceLibrary.
+	/// </summary>
+	/// <returns>The random original (ie, the GameObject instantiated by Resource.Load).</returns>
+	public GameObject GetRandomOriginal() {
+		string key = SaFrMo.Pick<string> (keys);
+
+		return dictionary [key];
+	}
+
+	/// <summary>
+	/// Copies a random resource held in this ResourceLibrary.
+	/// </summary>
+	/// <returns>The random resource.</returns>
+	public GameObject CopyRandomResource() {
+		string key = SaFrMo.Pick<string> (keys);
+
+		return CopyResource (key);
 	}
 
 }

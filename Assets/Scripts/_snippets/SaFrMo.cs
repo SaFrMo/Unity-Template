@@ -216,6 +216,21 @@ namespace SaFrLib {
 			return (mask.value & 1 << layerToTest) != 0;
 		}
 
+		/// <summary>
+		/// Get a random float between min (inclusive) and max (inclusive).
+		/// </summary>
+		/// <returns>The float.</returns>
+		/// <param name="min">Minimum.</param>
+		/// <param name="max">Max.</param>
+		public static float RandomFloat(float min = 0, float max = 1f) {
+			// Adapted from http://stackoverflow.com/questions/3365337/best-way-to-generate-a-random-float-in-c-sharp
+			// Perform arithmetic in double type to avoid overflowing
+			double range = (double) max - (double) min;
+			double sample = random.NextDouble ();
+			double scaled = (sample * range) + min;
+			return (float)scaled;
+		}
+
 		
 		// ===================
 		/* WIP BELOW */
