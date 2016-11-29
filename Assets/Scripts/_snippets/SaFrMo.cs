@@ -17,14 +17,18 @@ namespace SaFrLib {
 
 		// Boilerplate functions for all projects
 
-		public static System.Random random = new System.Random();
+		public static System.Random random = new System.Random(startingSeed);
+		public static int randomSeed = startingSeed;
+		public const int startingSeed = -1;
 
 		/// <summary>
 		/// Pick a random item from a list.
 		/// </summary>
 		/// <param name="source">Source.</param>
 		/// <typeparam name="T">The 1st type parameter.</typeparam>
-		public static T Pick<T>(List<T> source) {
+		public static T Pick<T>(List<T> source, int seed = startingSeed, bool forceNewRandom = false) {
+			TrySetSeed (seed, forceNewRandom);
+
 			return source[random.Next(source.Count)];
 		}
 
@@ -33,7 +37,9 @@ namespace SaFrLib {
 		/// </summary>
 		/// <returns>The enum.</returns>
 		/// <typeparam name="T">The 1st type parameter.</typeparam>
-		public static T PickEnum<T>() {
+		public static T PickEnum<T>(int seed = startingSeed, bool forceNewRandom = false) {
+			TrySetSeed (seed, forceNewRandom);
+
 			Array values = Enum.GetValues(typeof(T));
 			return (T)(values.GetValue(random.Next(values.Length)));
 		}
@@ -54,16 +60,10 @@ namespace SaFrLib {
 		/// Roll for success.
 		/// </summary>
 		/// <param name="chanceOfSuccess">Chance of success.</param>
-		public static bool Roll(int chanceOfSuccess = 50) {
-			return (UnityEngine.Random.Range (0, 100) < chanceOfSuccess);
-		}
+		public static bool Roll(int chanceOfSuccess = 50, int seed = startingSeed, bool forceNewRandom = false) {
+			TrySetSeed (seed, forceNewRandom);
 
-		/// <summary>
-		/// Roll for success (using a float - casts to int).
-		/// </summary>
-		/// <param name="chanceOfSuccess">Chance of success.</param>
-		public static bool Roll(float chanceOfSuccess) {
-			return Roll ((int)(chanceOfSuccess));
+			return (random.Next (0, 101) < chanceOfSuccess);
 		}
 		
 		/// <summary>
@@ -72,8 +72,10 @@ namespace SaFrLib {
 		/// </summary>
 		/// <typeparam name="T">Array element type.</typeparam>
 		/// <param name="array">Array to shuffle.</param>
-		public static T[] Shuffle<T>(T[] array)
+		public static T[] Shuffle<T>(T[] array, int seed = startingSeed, bool forceNewRandom = false)
 		{
+			TrySetSeed (seed, forceNewRandom);
+
 			int n = array.Length;
 			for (int i = 0; i < n; i++)
 			{
@@ -92,7 +94,9 @@ namespace SaFrLib {
 		/// </summary>
 		/// <returns>The random string.</returns>
 		/// <param name="length">Length.</param>
-		public static string GenerateRandomString(int length = 8) {
+		public static string GenerateRandomString(int length = 8, int seed = startingSeed, bool forceNewRandom = false) {
+			TrySetSeed (seed, forceNewRandom);
+
 			string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 			string result = new string(
 				Enumerable.Repeat(chars, length)
@@ -222,13 +226,32 @@ namespace SaFrLib {
 		/// <returns>The float.</returns>
 		/// <param name="min">Minimum.</param>
 		/// <param name="max">Max.</param>
-		public static float RandomFloat(float min = 0, float max = 1f) {
+		public static float RandomFloat(float min = 0, float max = 1f, int seed = startingSeed, bool forceNewRandom = false) {
+
+			TrySetSeed (seed, forceNewRandom);
+
 			// Adapted from http://stackoverflow.com/questions/3365337/best-way-to-generate-a-random-float-in-c-sharp
 			// Perform arithmetic in double type to avoid overflowing
 			double range = (double) max - (double) min;
 			double sample = random.NextDouble ();
 			double scaled = (sample * range) + min;
 			return (float)scaled;
+		}
+
+		/// <summary>
+		/// Tries the set the random seed. Ignores if the seed is already the given value and `force` is set to false. 
+		/// Returns whether or not a new System.Random instance was created.
+		/// </summary>
+		/// <param name="newSeed">New seed.</param>
+		/// <param name="force">If set to <c>true</c> force new System.Random instance with given seed.</param>
+		public static bool TrySetSeed (int newSeed, bool force = false) {
+			if (newSeed != startingSeed && (randomSeed != newSeed || force)) {
+				random = new System.Random (newSeed);
+				randomSeed = newSeed;
+				return true;
+			}
+
+			return false;
 		}
 
 		
