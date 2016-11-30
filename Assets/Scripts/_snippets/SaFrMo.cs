@@ -254,6 +254,64 @@ namespace SaFrLib {
 			return false;
 		}
 
+
+		/// <summary>
+		/// Gets a point in a 2D square region defined by two points, accounting for padding on all sides.
+		/// </summary>
+		/// <returns>The point in region.</returns>
+		/// <param name="bottomLeft">Bottom left.</param>
+		/// <param name="topRight">Top right.</param>
+		/// <param name="paddingTop">Padding top.</param>
+		/// <param name="paddingRight">Padding right.</param>
+		/// <param name="paddingBottom">Padding bottom.</param>
+		/// <param name="paddingLeft">Padding left.</param>
+		public static Vector3 GetPointInRegion(
+				Vector3 bottomLeft, Vector3 topRight, 
+				float paddingTop = 0, float paddingRight = 0, float paddingBottom = 0, float paddingLeft = 0,
+				int seed = -1, bool forceNewSeed = false
+			) {
+			TrySetSeed (seed, forceNewSeed);
+
+			float x = SaFrMo.RandomFloat (bottomLeft.x + paddingLeft, topRight.x - paddingRight);
+			float y = SaFrMo.RandomFloat (bottomLeft.y + paddingBottom, topRight.y - paddingTop);
+			return new Vector3 (x, y);
+		}
+
+		/// <summary>
+		/// Gets the point in percentage padded region.
+		/// </summary>
+		/// <returns>The point in percentage padded region.</returns>
+		/// <param name="bottomLeft">Bottom left.</param>
+		/// <param name="topRight">Top right.</param>
+		/// <param name="paddingTop">Padding top. Percentage value from 0 to 1.</param>
+		/// <param name="paddingRight">Padding right. Percentage value from 0 to 1.</param>
+		/// <param name="paddingBottom">Padding bottom. Percentage value from 0 to 1.</param>
+		/// <param name="paddingLeft">Padding left. Percentage value from 0 to 1.</param>
+		/// <param name="seed">Seed.</param>
+		/// <param name="forceNewSeed">If set to <c>true</c> force new seed.</param>
+		public static Vector3 GetPointInPercentagePaddedRegion(
+				Vector3 bottomLeft, Vector3 topRight, 
+				float paddingTop = 0, float paddingRight = 0, float paddingBottom = 0, float paddingLeft = 0,
+				int seed = -1, bool forceNewSeed = false
+			) {
+
+			// Doesn't call TrySetSeed because it uses GetPointInRegion, which itself calls TrySetSeed
+
+			float width = topRight.x - bottomLeft.x;
+			float height = topRight.y - bottomLeft.y;
+
+			return GetPointInRegion (
+				bottomLeft, 
+				topRight,
+				height * paddingTop,
+				width * paddingRight,
+				height * paddingBottom,
+				width * paddingLeft,
+				seed,
+				forceNewSeed
+			);
+		}
+
 		
 		// ===================
 		/* WIP BELOW */
