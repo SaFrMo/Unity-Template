@@ -8,7 +8,7 @@ public class Standard2dMover : MonoBehaviour {
 	/// ==================
 	/// 
 	/// WHAT:
-	/// 	A simple class to enable 2D movement. Imagine a Pokemon-like top-down sprite system.
+	/// 	A simple class to enable 2D movement. Imagine a Zelda-like gridless top-down sprite system.
 	/// 
 	/// HOW:
 	/// 	Attach to a GameObject. That's it! The Standard2dMover either uses the Rigidbody2D/Rigidbody
