@@ -118,8 +118,8 @@ namespace SaFrLib {
 
 			// Set parent
 			if (parent == null) {
-				Canvas c = FindObjectOfType<Canvas>();
-				if (c == null) {
+				Canvas c = FindObjectsOfType<Canvas>().FirstOrDefault(x => x.renderMode != RenderMode.WorldSpace);
+				if (c == default(Canvas)) {
 					// Create Canvas and EventSystem if none exists yet
 					c = new GameObject("Canvas (Created by Tooltips.cs)", typeof(Canvas), typeof(CanvasScaler), typeof(GraphicRaycaster)).GetComponent<Canvas>();
 					c.renderMode = RenderMode.ScreenSpaceOverlay;
