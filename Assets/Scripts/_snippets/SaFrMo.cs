@@ -312,6 +312,16 @@ namespace SaFrLib {
 			);
 		}
 
+		/// <summary>
+		/// Determines whether two 2d points are "close enough," as defined by the closeEnough value.
+		/// </summary>
+		/// <returns><c>true</c>, if enough2d was closed, <c>false</c> otherwise.</returns>
+		/// <param name="a">The alpha component.</param>
+		/// <param name="b">The blue component.</param>
+		/// <param name="closeEnough">Close enough.</param>
+		public static bool CloseEnough2d(Vector2 a, Vector2 b, float closeEnough = 0.01f) {
+			return Vector2.Distance(a, b) <= closeEnough;
+		}
 		
 		// ===================
 		/* WIP BELOW */

@@ -22,7 +22,7 @@ namespace SaFrLib {
 
 		// Custom callback type
 		[System.Serializable]
-		public class ProximityCallback2d : UnityEvent<ProximityTrigger2D, GameObject> {}
+		public class ProximityCallback2d : UnityEvent<ProximityTrigger2d, GameObject> {}
 
 		// Prep the callback
 		[SerializeField]
