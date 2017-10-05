@@ -6,7 +6,7 @@ The SaFrMo template collects some of the most useful plugins and utility functio
 
 ### How do I use it? ###
 1. Create a new Unity project at your target destination.
-2. Download the latest .zip of the SaFrMo template (https://bitbucket.org/SaFrMo/template/downloads)
+2. Download the latest .zip of the SaFrMo template [here](https://github.com/SaFrMo/Unity-Template/archive/master.zip).
 3. Unzip the downloaded file to your new Unity project's root folder.
 4. Rename the 'Template' names as necessary.
 
